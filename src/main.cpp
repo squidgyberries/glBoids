@@ -1,9 +1,6 @@
 #include "logg.hpp"
 
-#include <cstddef>
 #include <cstdint>
-#include <cstdio>
-#include <cstdlib>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -66,7 +63,7 @@ void main() {
 
 Logger logger(Logger::Level::Info, stderr);
 
-float randf() { return (float)rand() / (float)RAND_MAX; }
+float randf() { return (float)std::rand() / (float)RAND_MAX; }
 
 void randomize();
 void keyCallback(GLFWwindow *window, int key, int scancode, int action,
@@ -74,6 +71,8 @@ void keyCallback(GLFWwindow *window, int key, int scancode, int action,
 
 int main() {
   logger.debug("Hello world");
+  std::srand(std::time(nullptr));
+
   glfwInit();
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);

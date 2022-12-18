@@ -2,7 +2,6 @@
 #define GLBOIDS_LOGG_HPP
 
 #include <chrono>
-#include <cstdio>
 #include <string>
 
 #include <fmt/chrono.h>
