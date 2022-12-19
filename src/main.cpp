@@ -36,6 +36,7 @@ float avoidDistance = 20.0f;
 float avoidFactor = 0.05f;
 float matchFactor = 0.05f;
 float cursorFactor = 0.001f;
+bool followCursor = true;
 float marginTurnFactor = 1.0f;
 
 std::vector<Boid> boids(nrBoids);
@@ -242,7 +243,7 @@ int main() {
         }
       }
 
-      {
+      if (followCursor) {
         // Fly towards cursor
         double x, y;
         glfwGetCursorPos(window, &x, &y);
@@ -332,5 +333,12 @@ void keyCallback(GLFWwindow *window, int key, int scancode, int action,
                  int mods) {
   if (key == GLFW_KEY_R && action == GLFW_PRESS) {
     randomize();
+  } else if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
+    followCursor = !followCursor;
+    if (followCursor) {
+      fmt::print("\nResumed following cursor\n");
+    } else {
+      fmt::print("\nStopped following cursor\n");
+    }
   }
 }
