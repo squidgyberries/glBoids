@@ -21,8 +21,8 @@ public:
   glm::vec2 velocity;
 };
 
-constexpr int windowWidth = 1200;
-constexpr int windowHeight = 800;
+constexpr int windowWidth = 1600;
+constexpr int windowHeight = 1000;
 constexpr int32_t marginSize = 200;
 constexpr int32_t innerWidth = windowWidth - marginSize * 2;
 constexpr int32_t innerHeight = windowHeight - marginSize * 2;
@@ -35,6 +35,7 @@ float centeringFactor = 0.005f;
 float avoidDistance = 20.0f;
 float avoidFactor = 0.05f;
 float matchFactor = 0.05f;
+float cursorFactor = 0.001f;
 float marginTurnFactor = 1.0f;
 
 std::vector<Boid> boids(nrBoids);
@@ -96,6 +97,8 @@ int main() {
               GLAD_VERSION_MINOR(version));
 
   glfwSwapInterval(1);
+
+  glViewport(0, 0, windowWidth, windowHeight);
 
   logger.debug("Compiling shaders...");
 
@@ -240,6 +243,15 @@ int main() {
       }
 
       {
+        // Fly towards cursor
+        double x, y;
+        glfwGetCursorPos(window, &x, &y);
+        // fmt::print("{} {}\n", x, y);
+        glm::vec2 pos((float)(x - windowWidth * 0.5), (float)-(y - windowHeight * 0.5));
+        boid.velocity += (pos - boid.pos) * cursorFactor;
+      }
+
+      {
         // Check margins
         if (boid.pos.x < innerWidth * -0.5f) {
           boid.velocity.x += marginTurnFactor;
@@ -318,7 +330,7 @@ void randomize() {
 
 void keyCallback(GLFWwindow *window, int key, int scancode, int action,
                  int mods) {
-  if (action == GLFW_PRESS) {
+  if (key == GLFW_KEY_R && action == GLFW_PRESS) {
     randomize();
   }
 }
