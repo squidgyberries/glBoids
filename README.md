@@ -1,6 +1,6 @@
 # glBoids
 
-Boids in opengl. Tested on Arch Linux and Windows 10 with Clang.
+Boids in OpenGL. Tested on Arch Linux and Windows 10 with Clang.
 
 Keybinds:
 - r -> reset
